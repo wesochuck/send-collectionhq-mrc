@@ -86,7 +86,7 @@ foreach ($folder in $settings.folders) {
     }
 
     # Add the processed files from this path to the upload list
-    $processedFiles = Get-ChildItem -Path $path | Where-Object Extension -EQ $settings.ext
+    $processedFiles = @(Get-ChildItem -Path $path | Where-Object Extension -EQ $settings.ext)
     if ($null -ne $processedFiles) {
         $allFilesToUpload.AddRange($processedFiles)
     }
