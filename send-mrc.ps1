@@ -42,10 +42,16 @@ foreach ($folder in $settings.folders) {
     }
 
     # Delete all non MRC txt files regardless of age
-    Get-childitem -Path $path -File | Where-Object { ($_.Extension -ne $settings.ext) } | Remove-Item
+    Get-childitem -Path $path -File | Where-Object { ($_.Extension -ne $settings.ext) } | ForEach-Object {
+        Write-Output "Deleting file with non-matching extension: $($_.FullName)" | Tee-Object -File $log -Append
+        $_ | Remove-Item
+    }
 
     # Delete all Files more than NN hours old
-    Get-ChildItem -path $path | Where-Object LastWriteTime -lt ((Get-Date).AddHours(-1 * $settings.hours)) | Remove-Item
+    Get-ChildItem -path $path | Where-Object LastWriteTime -lt ((Get-Date).AddHours(-1 * $settings.hours)) | ForEach-Object {
+        Write-Output "Deleting old file: $($_.FullName)" | Tee-Object -File $log -Append
+        $_ | Remove-Item
+    }
 
     # Enumerate the remaining file(s)
     $files = Get-ChildItem -path $path
@@ -80,7 +86,7 @@ foreach ($folder in $settings.folders) {
     }
 
     # Add the processed files from this path to the upload list
-    $processedFiles = Get-ChildItem -Path $path | Where-Object Extension -EQ $settings.ext
+    $processedFiles = @(Get-ChildItem -Path $path | Where-Object Extension -EQ $settings.ext)
     if ($null -ne $processedFiles) {
         $allFilesToUpload.AddRange($processedFiles)
     }
