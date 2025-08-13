@@ -69,7 +69,14 @@ foreach ($folder in $settings.folders) {
             }
         }
 
-        Rename-Item -Path $file.FullName -NewName "$libraryname$($file.LastWriteTime.ToString('yyyyMMddTHHmmssffff'))$fileext"
+        try {
+            Rename-Item -Path $file.FullName -NewName "$libraryname$($file.LastWriteTime.ToString('yyyyMMddTHHmmssffff'))$fileext" -ErrorAction Stop
+        }
+        catch {
+            Write-Output "FATAL: Failed to rename file $($file.FullName). Error: $($_.Exception.Message)" | Tee-Object -File $log -Append
+            Write-Output "Exiting script." | Tee-Object -File $log -Append
+            exit 1
+        }
     }
 
     # Add the processed files from this path to the upload list
