@@ -1,0 +1,42 @@
+{
+  "basepath": "C:/ProgramData/Polaris/SRServiceRoot/TrainSR/129",
+  "folders": [
+    "scheduledjobs",
+    "adhocreports",
+    "saved"
+  ],
+  "hours": 120,
+  "ext": ".mrc",
+  "ftp": {
+    "url": "ftp.collectionhq.com",
+    "user": "username",
+    "pass": "password",
+    "remotepath": "/",
+    "retries": 2
+  },
+  "dayofweektorun": "Tuesday",
+  "transcriptpath": "C:/transcripts/transcript0.txt",
+  "libraryMappings": [
+    {
+      "hour": "01",
+      "basename": "dcdl",
+      "libraryName": "CollectionHQ-clc-delaware-"
+    },
+    {
+      "hour": "02",
+      "basename": "cml",
+      "libraryName": "CollectionHQ-clc-columbus-"
+    },
+    {
+      "hour": "03",
+      "basename": "wl",
+      "libraryName": "CollectionHQ-clc-worthington-"
+    },
+    {
+      "hour": "04",
+      "basename": "ghpl",
+      "libraryName": "CollectionHQ-clc-grandview-"
+    }
+  ],
+  "defaultLibraryName": "CollectionHQ-clc-library-unknown-"
+}
