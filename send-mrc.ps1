@@ -99,7 +99,8 @@ if ($allFilesToUpload.Count -gt 0) {
         $attempt++
         try {
             Write-Output "Setting up FTP session to $($settings.ftp.url) (Attempt $attempt of $retries)" | Tee-Object -File $log -Append
-            using ($session = New-Object WinSCP.Session) {
+            $session = New-Object WinSCP.Session
+            try {
                 # Connect
                 $session.Open($sessionOptions)
 
@@ -120,6 +121,9 @@ if ($allFilesToUpload.Count -gt 0) {
                         Write-Output "Upload of $($transfer.FileName) succeeded" | Tee-Object -File $log -Append
                     }
                 }
+            }
+            finally {
+                $session.Dispose()
             }
             Write-Output "FTP Session Closed" | Tee-Object -File $log -Append
             $uploadSuccess = $true
