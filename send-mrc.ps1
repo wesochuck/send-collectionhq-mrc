@@ -3,6 +3,26 @@ param (
     [switch]$ForceRun
 )
 
+# --- Prerequisite Check: .NET Framework Version ---
+try {
+    # WinSCPnet.dll requires .NET Framework 4.5 or newer.
+    # .NET 4.5 release number is 378389.
+    $requiredNetVersion = 378389
+    $netVersion = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full" -ErrorAction Stop | Select-Object -ExpandProperty Release
+
+    if ($netVersion -lt $requiredNetVersion) {
+        Write-Output "FATAL: This script requires .NET Framework 4.5 or newer."
+        Write-Output "Please upgrade your .NET Framework version to run this script."
+        exit 1
+    }
+}
+catch {
+    Write-Output "FATAL: Could not determine .NET Framework version."
+    Write-Output "This may be because .NET Framework 4.5 or newer is not installed."
+    Write-Output "Please ensure .NET Framework 4.5 or newer is installed and try again."
+    exit 1
+}
+
 # Get the script's path dynamically
 $scriptpath = $PSScriptRoot
 

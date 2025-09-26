@@ -4,6 +4,7 @@ This script is used to process and send MARC (`.mrc`) files, created by the Simp
 
 ## Prerequisites
 
+*   **.NET Framework 4.5 or newer**: This script requires the .NET Framework version 4.5 or higher to be installed on the system.
 *   **SimplyReports MARC Export**: The `.mrc` files must be generated using the **CollectionHQ MARC export profile** in SimplyReports.
 *   **WinSCP**: This script requires the `WinSCPnet.dll` assembly to be present in the same directory as the script. This is used for transferring files via FTP.
 
